@@ -20,7 +20,7 @@ let state = {
 //spinner function
 
 function handleSpinner(flag) {
-    if (flag === true) {
+    if (flag) {
         spinner.classList.remove('d-none')
     } else {
         spinner.classList.add('d-none')
@@ -59,7 +59,6 @@ function makeApiCall(url, methodName, body) {
 
 makeApiCall(todo_url, "GET")
     .then(data => {
-        handleSpinner()
         cl(data)
         for (const key in data) {
             data[key].id = key
@@ -75,6 +74,7 @@ makeApiCall(todo_url, "GET")
     })
 
 function renderonUI(arr) {
+    handleSpinner(true)
     let res = '';
 
     arr.forEach(ele => {
@@ -99,9 +99,9 @@ function onSubmit(eve) {
     let newTodo = {
         todo: todoItem.value,
     }
+    handleSpinner(true)
     makeApiCall(todo_url, "POST", body = newTodo)
         .then(data => {
-            handleSpinner()
             newTodo.id = data.name
             state.todoArr.push(newTodo)
             form.reset()
@@ -144,7 +144,7 @@ function onDelete(ele) {
                 confirmButtonText: "Yes, delete it!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    handleSpinner()
+                    handleSpinner(true)
                     let index = state.todoArr.findIndex(e => e.id === deleteId)
                     state.todoArr.splice(index, 1)
                     ele.closest('li').remove()
@@ -154,9 +154,9 @@ function onDelete(ele) {
             }).catch(err => {
                 snackbar('something went wrong while deleting the data', 'error')
             })
-                .finally(() => {
-                    handleSpinner()
-                })
+            .finally(() => {
+                handleSpinner()
+            })
         })
 }
 
@@ -190,7 +190,7 @@ function onUpdate() {
 
     makeApiCall(update_url, "PATCH", body = updateObj)
         .then(data => {
-            handleSpinner()
+            handleSpinner(true)
             let index = state.todoArr.findIndex(e => e.id === updateId)
             state.todoArr[index] = updateObj
 
