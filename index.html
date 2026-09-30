@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch todos with generic with firebase 1</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card bg-dark">
+                    <div class="card-body">
+                        <form action="" id="form">
+                            <div class="form-group">
+                                <label for="todoItem">Enter TodoItem<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="todoItem">
+                            </div>
+
+                            <div>
+                                <button type="submit" class="btn btn-outline-success btn-sm btn-block" id="addTodo">Add Todo</button>
+                                <button type="button" class="btn btn-outline-warning btn-sm btn-block d-none" id="updateTodo">Update Todo</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card bg-dark">
+                    <div class="card-body">
+                        <ul class="list-group" id="todoContainer">
+                            <!-- <li class="list-group-item d-flex justify-content-between">
+                                <strong>JS</strong>
+
+                                <div>
+                                    <button type="button" class="btn btn-sm btn-success">Edit</button>
+                                    <button type="button" class="btn btn-sm btn-danger">Remove</button>
+                                </div>
+                            </li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+<div class="spinner d-none" id="spinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>
