@@ -101,8 +101,10 @@ function onSubmit(eve) {
     }
     makeApiCall(todo_url, "POST", body = newTodo)
         .then(data => {
+            handleSpinner()
             newTodo.id = data.name
             state.todoArr.push(newTodo)
+            form.reset()
 
             let li = document.createElement("li")
             li.id = data.name
@@ -115,8 +117,11 @@ function onSubmit(eve) {
                                     </div>`
             todoContainer.append(li)
             snackbar(`new todo with name ${newTodo.todo} created successfully`, 'success')
-        }).catch(err =>{
+        }).catch(err => {
             snackbar('something ')
+        })
+        .finally(() => {
+            handleSpinner()
         })
 
 }
@@ -146,17 +151,17 @@ function onDelete(ele) {
 
                     snackbar(`todo with id ${deleteId} deleted successfully`, 'success')
                 }
-            }).catch(err =>{
+            }).catch(err => {
                 snackbar('something went wrong while deleting the data', 'error')
             })
-            .finally(()=>{
-                handleSpinner()
-            })
+                .finally(() => {
+                    handleSpinner()
+                })
         })
 }
 
 
-function onEdit(ele){
+function onEdit(ele) {
     let editId = ele.closest('li').id;
     // cl(editId)
 
@@ -172,33 +177,39 @@ function onEdit(ele){
 }
 
 
-function onUpdate(){
+function onUpdate() {
     let updateId = state.editId
     // cl(updateId)
 
     let update_url = `${base_url}/todos/${updateId}.json`
 
     let updateObj = {
-        todo : todoItem.value,
-        id : updateId
+        todo: todoItem.value,
+        id: updateId
     }
 
-    makeApiCall(update_url, "PATCH", body=updateObj)
-    .then(data =>{
-        let index = state.todoArr.findIndex(e => e.id === updateId)
-        state.todoArr[index] = updateObj
+    makeApiCall(update_url, "PATCH", body = updateObj)
+        .then(data => {
+            handleSpinner()
+            let index = state.todoArr.findIndex(e => e.id === updateId)
+            state.todoArr[index] = updateObj
 
-        let li = document.getElementById(updateId)
-        li.querySelector('span').innerText = updateObj.todo
+            let li = document.getElementById(updateId)
+            li.querySelector('strong').innerText = updateObj.todo
 
-        snackbar(`todo with name ${updateObj.todo} updated successfully`, 'success')
+            snackbar(`todo with name ${updateObj.todo} updated successfully`, 'success')
 
-        addTodo.classList.remove('d-none')
-        updateTodo.classList.add('d-none')
-    })
-    .catch(err =>{
-        snackbar('something went erong while updating the todo', 'error')
-    })
+            form.reset()
+
+            addTodo.classList.remove('d-none')
+            updateTodo.classList.add('d-none')
+        })
+        .catch(err => {
+            snackbar('something went wrong while updating the todo', 'error')
+        })
+        .finally(() => {
+            handleSpinner()
+        })
 }
 
 
