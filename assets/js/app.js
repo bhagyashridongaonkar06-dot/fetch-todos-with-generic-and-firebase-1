@@ -40,6 +40,7 @@ function snackbar(msg, icon) {
 //generic function
 
 function makeApiCall(url, methodName, body) {
+    handleSpinner(true)
     return fetch(url, {
         method: methodName,
         body: body ? JSON.stringify(body) : null,
@@ -74,7 +75,6 @@ makeApiCall(todo_url, "GET")
     })
 
 function renderonUI(arr) {
-    handleSpinner(true)
     let res = '';
 
     arr.forEach(ele => {
@@ -99,7 +99,7 @@ function onSubmit(eve) {
     let newTodo = {
         todo: todoItem.value,
     }
-    handleSpinner(true)
+     handleSpinner(true)
     makeApiCall(todo_url, "POST", body = newTodo)
         .then(data => {
             newTodo.id = data.name
@@ -132,7 +132,7 @@ function onDelete(ele) {
 
     let delete_url = `${base_url}/todos/${deleteId}.json`
 
-    makeApiCall(delete_url, "DELETE", body)
+    makeApiCall(delete_url, "DELETE", null)
         .then(data => {
             Swal.fire({
                 title: "Are you sure?",
@@ -144,7 +144,7 @@ function onDelete(ele) {
                 confirmButtonText: "Yes, delete it!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    handleSpinner(true)
+                     handleSpinner(true)
                     let index = state.todoArr.findIndex(e => e.id === deleteId)
                     state.todoArr.splice(index, 1)
                     ele.closest('li').remove()
@@ -190,7 +190,6 @@ function onUpdate() {
 
     makeApiCall(update_url, "PATCH", body = updateObj)
         .then(data => {
-            handleSpinner(true)
             let index = state.todoArr.findIndex(e => e.id === updateId)
             state.todoArr[index] = updateObj
 
